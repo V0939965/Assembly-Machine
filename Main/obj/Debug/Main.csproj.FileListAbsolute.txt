@@ -1,0 +1,84 @@
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\x64\concrt140.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\x64\cvextern.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\x64\msvcp140.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\x64\opencv_ffmpeg343_64.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\x64\vcruntime140.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\x86\concrt140.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\x86\cvextern.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\x86\msvcp140.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\x86\opencv_ffmpeg343.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\x86\vcruntime140.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\Vision.cs
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\Main.exe.config
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\Main.exe
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\Main.pdb
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\Emgu.CV.UI.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\Emgu.CV.World.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\ZedGraph.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\Emgu.CV.UI.xml
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\Emgu.CV.World.xml
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\ZedGraph.xml
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\de\ZedGraph.resources.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\es\ZedGraph.resources.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\fr\ZedGraph.resources.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\hu\ZedGraph.resources.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\it\ZedGraph.resources.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\ja\ZedGraph.resources.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\pt\ZedGraph.resources.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\ru\ZedGraph.resources.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\sk\ZedGraph.resources.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\sv\ZedGraph.resources.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\tr\ZedGraph.resources.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\zh-cn\ZedGraph.resources.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\bin\Debug\zh-tw\ZedGraph.resources.dll
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\obj\Debug\Main.Form1.resources
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\obj\Debug\Main.Properties.Resources.resources
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\obj\Debug\Main.csproj.GenerateResource.Cache
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\obj\Debug\Main.exe
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\obj\Debug\Main.pdb
+G:\Thieu\Internet of Things\Project\LocateAssemblyMachine\Main\obj\Debug\Main.csprojResolveAssemblyReference.cache
+E:\Thieu\Project\Locate_Label_Assembly_Machine\Main\bin\Debug\Main.exe.config
+E:\Thieu\Project\Locate_Label_Assembly_Machine\Main\obj\Debug\Main.exe
+E:\Thieu\Project\Locate_Label_Assembly_Machine\Main\obj\Debug\Main.pdb
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\x64\concrt140.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\x64\cvextern.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\x64\msvcp140.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\x64\opencv_ffmpeg343_64.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\x64\vcruntime140.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\x86\concrt140.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\x86\cvextern.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\x86\msvcp140.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\x86\opencv_ffmpeg343.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\x86\vcruntime140.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\Main.exe.config
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\Emgu.CV.UI.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\Emgu.CV.World.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\MvCameraControl.Net.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\ZedGraph.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\Emgu.CV.UI.xml
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\Emgu.CV.World.xml
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\ZedGraph.xml
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\de\ZedGraph.resources.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\es\ZedGraph.resources.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\fr\ZedGraph.resources.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\hu\ZedGraph.resources.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\it\ZedGraph.resources.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\ja\ZedGraph.resources.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\pt\ZedGraph.resources.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\ru\ZedGraph.resources.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\sk\ZedGraph.resources.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\sv\ZedGraph.resources.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\tr\ZedGraph.resources.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\zh-cn\ZedGraph.resources.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\zh-tw\ZedGraph.resources.dll
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\Main.exe
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\HIKVision.cs
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\Vision.cs
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\Main.pdb
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\obj\Debug\Main.FindCenter.resources
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\obj\Debug\Main.Main.resources
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\obj\Debug\Main.Properties.Resources.resources
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\obj\Debug\Main.csproj.GenerateResource.Cache
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\obj\Debug\Main.exe
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\obj\Debug\Main.pdb
+E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\obj\Debug\Main.csprojResolveAssemblyReference.cache
