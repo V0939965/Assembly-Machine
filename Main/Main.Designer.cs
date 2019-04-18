@@ -59,7 +59,6 @@
             this.pulse_z = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.G_PLC = new System.Windows.Forms.GroupBox();
-            this.log = new System.Windows.Forms.Label();
             this.trackBar1 = new System.Windows.Forms.TrackBar();
             this.Serial_Light = new System.IO.Ports.SerialPort(this.components);
             this.label9 = new System.Windows.Forms.Label();
@@ -79,13 +78,8 @@
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getCenterRotationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getOriginImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.algorithm = new System.Windows.Forms.CheckBox();
             this.Serial_Scanner = new System.IO.Ports.SerialPort(this.components);
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.status = new System.Windows.Forms.Label();
             this.g_imShow.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.p_imShow)).BeginInit();
             this.G_setting.SuspendLayout();
@@ -108,7 +102,7 @@
             this.g_imShow.Controls.Add(this.p_imShow);
             this.g_imShow.Location = new System.Drawing.Point(12, 27);
             this.g_imShow.Name = "g_imShow";
-            this.g_imShow.Size = new System.Drawing.Size(869, 608);
+            this.g_imShow.Size = new System.Drawing.Size(869, 600);
             this.g_imShow.TabIndex = 0;
             this.g_imShow.TabStop = false;
             this.g_imShow.Text = "Image Capture";
@@ -118,7 +112,7 @@
             this.p_imShow.BackColor = System.Drawing.SystemColors.ControlDark;
             this.p_imShow.Location = new System.Drawing.Point(6, 19);
             this.p_imShow.Name = "p_imShow";
-            this.p_imShow.Size = new System.Drawing.Size(855, 583);
+            this.p_imShow.Size = new System.Drawing.Size(855, 572);
             this.p_imShow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.p_imShow.TabIndex = 0;
             this.p_imShow.TabStop = false;
@@ -273,7 +267,8 @@
             // 
             // Start
             // 
-            this.Start.Location = new System.Drawing.Point(890, 610);
+            this.Start.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Start.Location = new System.Drawing.Point(887, 587);
             this.Start.Name = "Start";
             this.Start.Size = new System.Drawing.Size(188, 40);
             this.Start.TabIndex = 2;
@@ -373,13 +368,6 @@
             this.G_PLC.TabIndex = 5;
             this.G_PLC.TabStop = false;
             this.G_PLC.Text = "PLC configuration";
-            // 
-            // log
-            // 
-            this.log.Location = new System.Drawing.Point(15, 640);
-            this.log.Name = "log";
-            this.log.Size = new System.Drawing.Size(546, 13);
-            this.log.TabIndex = 7;
             // 
             // trackBar1
             // 
@@ -555,62 +543,17 @@
             this.getOriginImageToolStripMenuItem.Text = "Get Origin Image";
             this.getOriginImageToolStripMenuItem.Click += new System.EventHandler(this.getOriginImageToolStripMenuItem_Click);
             // 
-            // algorithm
-            // 
-            this.algorithm.AutoSize = true;
-            this.algorithm.Location = new System.Drawing.Point(890, 451);
-            this.algorithm.Name = "algorithm";
-            this.algorithm.Size = new System.Drawing.Size(69, 17);
-            this.algorithm.TabIndex = 23;
-            this.algorithm.Text = "Algorithm";
-            this.algorithm.UseVisualStyleBackColor = true;
-            // 
             // Serial_Scanner
             // 
             this.Serial_Scanner.BaudRate = 115200;
             this.Serial_Scanner.PortName = "COM10";
             // 
-            // button1
+            // status
             // 
-            this.button1.Location = new System.Drawing.Point(988, 451);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(94, 31);
-            this.button1.TabIndex = 24;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(944, 526);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(50, 23);
-            this.button2.TabIndex = 25;
-            this.button2.Text = "Set";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
-            // 
-            // textBox1
-            // 
-            this.textBox1.Location = new System.Drawing.Point(893, 526);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(40, 20);
-            this.textBox1.TabIndex = 26;
-            this.textBox1.Text = "M0";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(890, 552);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(49, 20);
-            this.textBox2.TabIndex = 27;
-            // 
-            // textBox3
-            // 
-            this.textBox3.Location = new System.Drawing.Point(945, 552);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(49, 20);
-            this.textBox3.TabIndex = 28;
+            this.status.Location = new System.Drawing.Point(9, 640);
+            this.status.Name = "status";
+            this.status.Size = new System.Drawing.Size(1073, 23);
+            this.status.TabIndex = 24;
             // 
             // Main
             // 
@@ -619,18 +562,12 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1094, 662);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.algorithm);
+            this.Controls.Add(this.status);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.panel9);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.trackBar1);
-            this.Controls.Add(this.log);
             this.Controls.Add(this.G_PLC);
             this.Controls.Add(this.Start);
             this.Controls.Add(this.G_setting);
@@ -698,7 +635,6 @@
         private System.Windows.Forms.TextBox pulse_x;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox G_PLC;
-        private System.Windows.Forms.Label log;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.Label label7;
         private System.Windows.Forms.Panel panel8;
@@ -724,13 +660,9 @@
         private System.Windows.Forms.ToolStripMenuItem getOriginImageToolStripMenuItem;
         private System.Windows.Forms.RichTextBox iLink;
         private System.Windows.Forms.Button iChooseLink;
-        private System.Windows.Forms.CheckBox algorithm;
         private System.IO.Ports.SerialPort Serial_Scanner;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Label log;
+        private System.Windows.Forms.Label status;
     }
 }
 

@@ -23,9 +23,6 @@ namespace Main
         public static int y = 735;
         public static int width = 1330;
         public static int height = 665;
-
-
-        private static double deviation = 20;
         public static Image<Bgr, Byte> TestRoi(Image<Bgr, Byte> scr)
         {
             Rectangle roi = new Rectangle(x, y, width, height);

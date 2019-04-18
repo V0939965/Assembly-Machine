@@ -44,14 +44,18 @@ namespace PLCController
             this._bit = "0001";
             this._word = "0000";
         }
-        //public void Open()
-        //{
-        //    if (client == null || client.Connected == false)
-        //    {
-        //        client = new TcpClient(_ip, _port);
-        //        stream = client.GetStream();
-        //    }
-        //}
+        public bool Open(int timeout=5000)
+        {
+            Stopwatch sw = new Stopwatch();
+            sw.Reset();
+            sw.Start();
+            while (sw.ElapsedMilliseconds < timeout && Ping() == false) ;
+            sw.Stop();
+            if (sw.ElapsedMilliseconds < timeout)
+                return true;
+            else
+                return false;
+        }
         public bool Ping()
         {
             Ping pingSender = new Ping();
@@ -65,34 +69,28 @@ namespace PLCController
             else
                 return false;
         }
-        //public void Close()
-        //{
-        //    if (client != null)
-        //        if (client.Connected == true)
-        //        {
-        //            stream.Close();
-        //            client.Close();
-        //        }
-        //}
         private string SendCommand(string command)
         {
             Thread.Sleep(5);
-            while (!Ping()) ;
             byte[] commandBytes = System.Text.Encoding.UTF8.GetBytes(command);
             byte[] buff = new byte[1024];
-            TcpClient client = new TcpClient(_ip, _port);
-            NetworkStream stream = client.GetStream();
-            stream.Write(commandBytes, 0, commandBytes.Length);
-            stream.Read(buff, 0, 1024);
-            stream.Close();
-            client.Close();
-            string result = System.Text.Encoding.UTF8.GetString(buff);
-            int index = 0;
-            while (result.Substring(index, 1) != "\0")
+            string result = string.Empty;
+            Open();
             {
-                index++;
+                TcpClient client = new TcpClient(_ip, _port);
+                NetworkStream stream = client.GetStream();
+                stream.Write(commandBytes, 0, commandBytes.Length);
+                stream.Read(buff, 0, 1024);
+                stream.Close();
+                client.Close();
+                result = System.Text.Encoding.UTF8.GetString(buff);
+                int index = 0;
+                while (result.Substring(index, 1) != "\0")
+                {
+                    index++;
+                }
+                result = result.Substring(0, index);
             }
-            result = result.Substring(0, index);
             return result;
             //byte[] commandBytes = System.Text.Encoding.UTF8.GetBytes(command);
             //stream.Write(commandBytes, 0, commandBytes.Length);

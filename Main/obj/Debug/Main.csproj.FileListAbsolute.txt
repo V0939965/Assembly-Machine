@@ -127,10 +127,10 @@ E:\THIEU-FII\Projects\Assembly Machine\Assembly-Machine\Main\bin\Debug\sv\ZedGra
 E:\THIEU-FII\Projects\Assembly Machine\Assembly-Machine\Main\bin\Debug\tr\ZedGraph.resources.dll
 E:\THIEU-FII\Projects\Assembly Machine\Assembly-Machine\Main\bin\Debug\zh-cn\ZedGraph.resources.dll
 E:\THIEU-FII\Projects\Assembly Machine\Assembly-Machine\Main\bin\Debug\zh-tw\ZedGraph.resources.dll
-E:\THIEU-FII\Projects\Assembly Machine\Assembly-Machine\Main\obj\Debug\Main.csprojResolveAssemblyReference.cache
 E:\THIEU-FII\Projects\Assembly Machine\Assembly-Machine\Main\obj\Debug\Main.FindCenter.resources
 E:\THIEU-FII\Projects\Assembly Machine\Assembly-Machine\Main\obj\Debug\Main.Main.resources
 E:\THIEU-FII\Projects\Assembly Machine\Assembly-Machine\Main\obj\Debug\Main.Properties.Resources.resources
 E:\THIEU-FII\Projects\Assembly Machine\Assembly-Machine\Main\obj\Debug\Main.csproj.GenerateResource.Cache
 E:\THIEU-FII\Projects\Assembly Machine\Assembly-Machine\Main\obj\Debug\Main.exe
 E:\THIEU-FII\Projects\Assembly Machine\Assembly-Machine\Main\obj\Debug\Main.pdb
+E:\THIEU-FII\Projects\Assembly Machine\Assembly-Machine\Main\obj\Debug\Main.csprojResolveAssemblyReference.cache

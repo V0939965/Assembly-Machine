@@ -19,7 +19,6 @@ namespace Main
         HIKVision Camera = new HIKVision();
         private Thread HBB;
         private bool Run = false;
-        string debug = string.Empty;
         PLCController.PLCController plc = new PLCController.PLCController("192.168.3.250",1996);
         PLCController.PLCController plc2 = new PLCController.PLCController("192.168.3.95", 1996);
         string linkimg = string.Empty;
@@ -123,10 +122,15 @@ namespace Main
             modeCamera_CheckedChanged(null, null);
             ORG.SetPointO(Config.Parameter.ROTATION_CENTER);
             GetOriginImage();
-            //plc.Ping();
-            //plc2.Ping();
-            //Thread Syn = new Thread(new ThreadStart(SynchronizePLC));
-            //Syn.Start();
+        }
+        public void ShowLog(string stringstatus,Color color)
+        {
+            status.Text = stringstatus;
+            status.ForeColor = color;
+            status.Invalidate();
+            status.Update();
+            status.Refresh();
+            Application.DoEvents();
         }
         private void Release()
         {
@@ -135,40 +139,47 @@ namespace Main
         }
         private bool OpenDevice()
         {
+            ShowLog("Update parameter!", Color.Green);
             UpdateParameter(true); ;
+            ShowLog("Connecting COM port for light!", Color.Green);
             if (!Serial_Light.IsOpen)
             {
                 Serial_Light.Open();
             }
             ORG.SetPointO(Config.Parameter.ROTATION_CENTER);
             GetOriginImage();
+            ShowLog("Connecting to Camera", Color.Green);
             bool response = OpenCamera();
 
-            if (response == true)
+            if (response)
             {
-                //response = plc.Ping();
-                if(response == true)
+                ShowLog("Connecting to PLC 1", Color.Green);
+                response = plc.Open(10000);
+                if(response)
                 {
-                    try
+                    ShowLog("Connecting to PLC 2", Color.Green);
+                    response = plc2.Open(10000);
+                    if (response)
+                        ShowLog("Starting success", Color.Green);
+                    else
                     {
-                        return response;
-                    }
-                    catch (SocketException er)
-                    {
-                        Camera.CloseDevice();
-                        response = false;
-                        MessageBox.Show("[" + er.ErrorCode + "]" + er.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Can't Connecting to PLC 2 ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        ShowLog("Can't Connecting to PLC 2 ", Color.Red);
                     }
                 }
                 else
                 {
-                    MessageBox.Show("Ping Timeout to PLC", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Can't Connecting to PLC 1 ", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    ShowLog("Can't Connecting to PLC 1 ", Color.Red);
                 }
             }
             else
             {
-                MessageBox.Show("Can't open Camera!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                ShowLog("Can't open Camera", Color.Red);
+                MessageBox.Show("Can't Connecting to Camera", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+            if(!response)
+                Release();
             return response;
 
         }
@@ -195,28 +206,6 @@ namespace Main
 
         private void ComputerVisionLabel()
         {
-            log.Invoke(new MethodInvoker(delegate ()
-            {
-                log.Text = "Connecting to PLC1!";
-                log.ForeColor = Color.Red;
-            }));
-            while (!plc.Ping())
-            {
-                Thread.Sleep(10);
-            }
-            log.Invoke(new MethodInvoker(delegate ()
-            {
-                log.Text = "Connecting to PLC2!";
-            }));
-            while (!plc2.Ping())
-            {
-                Thread.Sleep(10);
-            }
-            log.Invoke(new MethodInvoker(delegate ()
-            {
-                log.Text = "Connected to PLC!";
-                log.ForeColor = Color.Green;
-            }));
             if (modeCamera.Checked == true)
             {
                 int Flag_Ready = 1;
@@ -224,7 +213,6 @@ namespace Main
                 {
                     int nRet_Locate=-1;
                     int nRet_Scanner = -1;
-                    //lock (plc)
                     {
                         while(nRet_Locate == -1)
                         {
@@ -232,11 +220,7 @@ namespace Main
                         }
                     }
                     if (nRet_Locate == Flag_Ready)
-                    {
                         Handling();
-                        
-                    }
-
                     else
                     {
                         while (nRet_Scanner == -1)
@@ -298,17 +282,8 @@ namespace Main
             {
                 p = ComputerVison.Search2Tip(cnt);
                 ComputerVison.Calculator(ref result, ORG.PointA, ORG.PointB, p[0], p[1], Config.Parameter.LabelSize.Width, false);
-                
-                //if (algorithm.Checked)
-                //{
-                //    cnt = ComputerVison.FindContours(iGray, Config.Parameter.THRESHOLD_VALUE);
-                //    p = ComputerVison.Search2Tip(cnt);
-                //}
-                //else
-                //{
-                    ComputerVison.RouPoint(ORG.PointO, ref p[0], result.ANGLE);
-                    ComputerVison.RouPoint(ORG.PointO, ref p[1], result.ANGLE);
-                //}
+                ComputerVison.RouPoint(ORG.PointO, ref p[0], result.ANGLE);
+                ComputerVison.RouPoint(ORG.PointO, ref p[1], result.ANGLE);
                 ComputerVison.Calculator(ref result, ORG.PointA, ORG.PointB, p[0], p[1], Config.Parameter.LabelSize.Width, true);
                 short y = (short)Math.Round(result.X * Config.Parameter.PULSE_Y);
                 short x = (short)Math.Round(result.Y * Config.Parameter.PULSE_X);
@@ -317,21 +292,17 @@ namespace Main
                 {
                     PLCCommunicate(x, y, z);
                 }
-                log.Invoke(new MethodInvoker(delegate ()
-                {
-                    log.Text = "X:" + x.ToString("F3") + " Y:" + y.ToString("F3") + " Angle:" + z.ToString();
-                }));
+                //log.Invoke(new MethodInvoker(delegate ()
+                //{
+                //    log.Text = "X:" + x.ToString("F3") + " Y:" + y.ToString("F3") + " Angle:" + z.ToString();
+                //}));
                 iGray = iBgr.Convert<Gray, byte>();
-                
                 ComputerVison.RotationImage(ref iGray, Config.Parameter.ROTATION_CENTER, (float)result.ANGLE);
-                //double Pixel_Per_Mm = Math.Abs(p[0].Y - p[1].Y) / Config.Parameter.LabelSize.Width;
-                //ComputerVison.TransformImage(ref iGray, -(int)(result.X * Pixel_Per_Mm), -(int)(result.Y * Pixel_Per_Mm));
                 cnt = ComputerVison.FindContours(iGray, Config.Parameter.THRESHOLD_VALUE);
                 using (Image<Bgr, byte> iBgr2 = iGray.Convert<Bgr, byte>())
                 {
                     RotatedRect r = CvInvoke.MinAreaRect(cnt);
                     CvInvoke.Rectangle(iBgr2, r.MinAreaRect(), new MCvScalar(0, 255, 0), 3);
-                   // CvInvoke.Rectangle(iBgr2, ORGRec, new MCvScalar(0, 255, 0), 3);
                     if (modeCamera.Checked)
                     {
                         CvInvoke.Imwrite(@"backup\" + name + ".bmp", iBgr);
@@ -348,7 +319,6 @@ namespace Main
             {
                 using (Image<Bgr, byte> iBgr2 = iGray.Convert<Bgr, byte>())
                 {
-                    
                     CvInvoke.Rectangle(iBgr2, ORGRec, new MCvScalar(0, 255, 0), 3);
                     p_imShow.Invoke(new MethodInvoker(delegate ()
                     {
@@ -377,10 +347,11 @@ namespace Main
         {
             if (this.Start.Text=="Start")
             {
+                Start.Text = "Starting";
                 Start.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
+                Start.Update();
                 bool response = OpenDevice();
-                
                 if (response ==  true)
                 {
                     G_setting.Enabled = false;
@@ -392,6 +363,8 @@ namespace Main
                     this.Start.Text = "Stop";
                     Light_Mode(false);
                 }
+                else
+                    Start.Text = "Start";
                 this.Cursor = Cursors.Default;
                 Start.Enabled = true;
             }
@@ -400,7 +373,6 @@ namespace Main
                 Start.Enabled = false;
                 this.Cursor = Cursors.WaitCursor;
                 Release();
-                log.Text = "Reddy";
                 this.Start.Text = "Start";
                 Run = false;
                 G_setting.Enabled = true;
@@ -478,16 +450,6 @@ namespace Main
         private void modeCamera_CheckedChanged(object sender, EventArgs e)
         {
             iLink.Enabled = iChooseLink.Enabled = modeFolder.Checked;
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Scan_Label();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            debug = textBox1.Text;
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
@@ -605,17 +567,6 @@ namespace Main
                     if (nRet!= -1)
                         nRet1 = plc.SetDevice(Device2[i, 1], nRet);
                 }
-                if (debug != string.Empty)
-                {
-                    textBox2.Invoke(new MethodInvoker(delegate ()
-                 {
-                     textBox2.Text = plc.GetDevice(debug).ToString();
-                 }));
-                    textBox3.Invoke(new MethodInvoker(delegate ()
-                    {
-                        textBox3.Text = plc2.GetDevice(debug).ToString();
-                    }));
-                }
             }
         }
         private void UpdateParameter(bool write=false)
@@ -668,8 +619,5 @@ namespace Main
         public double X;
         public double Y;
         public double ANGLE;
-        public double DEVIATION;
     }
-
-
 }
