@@ -49,8 +49,8 @@ namespace Main
                     cnt = ComputerVison.FindContours(_img, Config.Parameter.THRESHOLD_VALUE);
                     RotatedRect a = CvInvoke.MinAreaRect(cnt);
                     ORGRec = a.MinAreaRect();
-                    ORGRec.X -= 20;
-                    ORGRec.Y -= 20;
+                    ORGRec.X += Config.Parameter.ROI.X-10;
+                    ORGRec.Y += Config.Parameter.ROI.Y-10;
                     ORGRec.Height += 20;
                     ORGRec.Width += 20;
                     using (Image<Bgr, byte> iBgr2 = _img.Convert<Bgr, byte>())
@@ -233,16 +233,8 @@ namespace Main
                     }
                     if (nRet_Locate == Flag_Ready)
                     {
-                        Response result = Handling();
-                        Light_Mode(false);
-                        short y = (short)Math.Round(result.X * Config.Parameter.PULSE_Y);
-                        short x = (short)Math.Round(result.Y * Config.Parameter.PULSE_X);
-                        short z = (short)Math.Round(-result.ANGLE * Config.Parameter.PULSE_Z / 360);
-                        PLCCommunicate(x, y, z);
-                        log.Invoke(new MethodInvoker(delegate ()
-                        {
-                            log.Text = "X:" + x.ToString("F3") + " Y:" + y.ToString("F3") + " Angle:" + z.ToString();
-                        }));
+                        Handling();
+                        
                     }
 
                     else
@@ -289,15 +281,14 @@ namespace Main
             }
             
         }
-        private Response Handling()
+        private void Handling()
         {
             Response result = new Response();
-            string name = DateTime.Now.Minute.ToString() + DateTime.Now.Millisecond.ToString();
+            string name = DateTime.Now.Year.ToString() + "_" + DateTime.Now.Month.ToString() + "_" + DateTime.Now.Day.ToString() + "_" + DateTime.Now.Hour.ToString() + "_" + DateTime.Now.Minute.ToString() + "_" + DateTime.Now.Second.ToString();
             Light_Mode(modeCamera.Checked);
             Thread.Sleep(500);
             Image<Bgr, byte> iBgr = GetImage();
             Light_Mode(false);
-            CvInvoke.Imwrite(@"backup\" + name + ".bmp", iBgr);
             Image<Gray, byte> iGray = iBgr.Convert<Gray, byte>();
             iGray = ComputerVison.RoiImage(iGray, Config.Parameter.ROI);
             VectorOfPoint cnt = new VectorOfPoint();
@@ -306,28 +297,41 @@ namespace Main
             if(cnt != null)
             {
                 p = ComputerVison.Search2Tip(cnt);
-                ComputerVison.Calculator(ref result, ORG.PointA, ORG.PointB, p[0], p[1], Config.Parameter.LabelSize.Height, false);
-                ComputerVison.RotationImage(ref iGray, ORG.PointO, (float)result.ANGLE);
-                if (algorithm.Checked)
-                {
-                    cnt = ComputerVison.FindContours(iGray, Config.Parameter.THRESHOLD_VALUE);
-                    p = ComputerVison.Search2Tip(cnt);
-                }
-                else
-                {
+                ComputerVison.Calculator(ref result, ORG.PointA, ORG.PointB, p[0], p[1], Config.Parameter.LabelSize.Width, false);
+                
+                //if (algorithm.Checked)
+                //{
+                //    cnt = ComputerVison.FindContours(iGray, Config.Parameter.THRESHOLD_VALUE);
+                //    p = ComputerVison.Search2Tip(cnt);
+                //}
+                //else
+                //{
                     ComputerVison.RouPoint(ORG.PointO, ref p[0], result.ANGLE);
                     ComputerVison.RouPoint(ORG.PointO, ref p[1], result.ANGLE);
+                //}
+                ComputerVison.Calculator(ref result, ORG.PointA, ORG.PointB, p[0], p[1], Config.Parameter.LabelSize.Width, true);
+                short y = (short)Math.Round(result.X * Config.Parameter.PULSE_Y);
+                short x = (short)Math.Round(result.Y * Config.Parameter.PULSE_X);
+                short z = (short)Math.Round(-result.ANGLE * Config.Parameter.PULSE_Z / 360);
+                if (modeCamera.Checked)
+                {
+                    PLCCommunicate(x, y, z);
                 }
-                ComputerVison.Calculator(ref result, ORG.PointA, ORG.PointB, p[0], p[1], Config.Parameter.LabelSize.Height, true);
-                double Pixel_Per_Mm = Math.Abs(p[0].Y - p[1].Y) / Config.Parameter.LabelSize.Width;
-                ComputerVison.TransformImage(ref iGray, -(int)(result.X * Pixel_Per_Mm), -(int)(result.Y * Pixel_Per_Mm));
+                log.Invoke(new MethodInvoker(delegate ()
+                {
+                    log.Text = "X:" + x.ToString("F3") + " Y:" + y.ToString("F3") + " Angle:" + z.ToString();
+                }));
+                iGray = iBgr.Convert<Gray, byte>();
+                
+                ComputerVison.RotationImage(ref iGray, Config.Parameter.ROTATION_CENTER, (float)result.ANGLE);
+                //double Pixel_Per_Mm = Math.Abs(p[0].Y - p[1].Y) / Config.Parameter.LabelSize.Width;
+                //ComputerVison.TransformImage(ref iGray, -(int)(result.X * Pixel_Per_Mm), -(int)(result.Y * Pixel_Per_Mm));
                 cnt = ComputerVison.FindContours(iGray, Config.Parameter.THRESHOLD_VALUE);
-
                 using (Image<Bgr, byte> iBgr2 = iGray.Convert<Bgr, byte>())
                 {
                     RotatedRect r = CvInvoke.MinAreaRect(cnt);
-                    //CvInvoke.Rectangle(iBgr2, r.MinAreaRect(), new MCvScalar(0, 0, 255), 3);
-                    CvInvoke.Rectangle(iBgr2, ORGRec, new MCvScalar(0, 255, 0), 3);
+                    CvInvoke.Rectangle(iBgr2, r.MinAreaRect(), new MCvScalar(0, 255, 0), 3);
+                   // CvInvoke.Rectangle(iBgr2, ORGRec, new MCvScalar(0, 255, 0), 3);
                     if (modeCamera.Checked)
                     {
                         CvInvoke.Imwrite(@"backup\" + name + ".bmp", iBgr);
@@ -367,7 +371,6 @@ namespace Main
             }
             iGray.Dispose();
             iBgr.Dispose();
-            return result;
         }
        
         private void Start_Click(object sender, EventArgs e)
@@ -467,11 +470,7 @@ namespace Main
             {
 
                 iLink.Text = linkimg = Folder.FileName;
-                Response result = Handling();
-                short y = (short)Math.Round(result.X * Config.Parameter.PULSE_Y);
-                short x = (short)Math.Round(result.Y * Config.Parameter.PULSE_X);
-                short z = (short)Math.Round(-result.ANGLE * Config.Parameter.PULSE_Z / 360);
-                log.Text = "X:" + x.ToString("F3") + " Y:" + y.ToString("F3") + " Angle:" + z.ToString();
+                Handling();
             }
             Folder.Dispose();
         }
@@ -581,20 +580,16 @@ namespace Main
         private void SynchronizePLC()
         {
             string[,] Device1 = new string[,] { 
-                //{"M0","M0"},//
-                //{ "M18","M18"},//
-                //{"S3","S3" },//
-                {"M814","M114" },//
-                {"M802","M86" },//
-                {"M804","M84" }//
+                {"M814","M114" },
+                {"M802","M86" },
+                {"M804","M84" }
             };
             string[,] Device2 = new string[,] {
-                {"M115", "M810" },//
-                {"M90","M890" },//
-                {"M83","M803" },//
-                {"M516","M800" }//
+                {"M115", "M810" },
+                {"M90","M890" },
+                {"M83","M803" },
+                {"M516","M800" }
             };
-            //while (Synchronize)
             {
                 short nRet;
                 short nRet1 = 0;
@@ -621,7 +616,6 @@ namespace Main
                         textBox3.Text = plc2.GetDevice(debug).ToString();
                     }));
                 }
-                //Thread.Sleep(1000);
             }
         }
         private void UpdateParameter(bool write=false)
