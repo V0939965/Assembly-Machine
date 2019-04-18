@@ -121,7 +121,18 @@ namespace Main
                 return null;
             
         }
-
+        public static void RouPoint(System.Drawing.Point RouCenter, ref System.Drawing.Point point, double angle)
+        {
+            System.Drawing.Point p = new System.Drawing.Point();
+            int x = (point.X - RouCenter.X);
+            int y = (point.Y - RouCenter.Y);
+            angle = angle * Math.PI / 180.0;
+            int x1 = (int)Math.Round(x * Math.Cos(angle) - y * Math.Sin(angle));
+            int y1 = (int)Math.Round(x * Math.Sin(angle) + y * Math.Cos(angle));
+            p.X = x1 + RouCenter.X;
+            p.Y = y1 + RouCenter.Y;
+            point = p;
+        }
         public static void Calculator(ref Response Socurce, System.Drawing.Point A,System.Drawing.Point B,System.Drawing.Point A1, System.Drawing.Point B1, int HeightLable,bool mode)
         {
             Vector org = new Vector(B.X - A.X, B.Y - A.Y);
@@ -129,16 +140,9 @@ namespace Main
             if (mode == true)
             {
                 double tile = (double)org.Length / v.Length;
-
-
-                double Pixel_Per_Mm = Math.Abs(A1.Y - B1.Y) / HeightLable;//29
-
-
-
-                Socurce.X = ((A1.X - A.X)*tile) / Pixel_Per_Mm;
-                Socurce.Y = ((A1.Y - A.Y)*tile) / Pixel_Per_Mm;
-                System.Console.WriteLine("pixel / mm = "+Pixel_Per_Mm);
-                System.Console.WriteLine("ti le = " + tile.ToString());
+                double Pixel_Per_Mm = Math.Abs(A1.Y - B1.Y) / HeightLable;
+                Socurce.X = (((A1.X - A.X) * tile) + ((B1.X - B.X) * tile) )/ (2*Pixel_Per_Mm);
+                Socurce.Y = (((A1.Y - A.Y) * tile)+ ((B1.Y - B.Y) * tile)) / (2*Pixel_Per_Mm);
             }
             else
             {

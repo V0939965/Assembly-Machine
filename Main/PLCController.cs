@@ -5,8 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net;
 using System.Net.Sockets;
-using System.IO;
+using System.Diagnostics;
 using System.Threading;
+using System.Net.NetworkInformation;
 namespace PLCController
 {
     class PLCController
@@ -25,8 +26,8 @@ namespace PLCController
         private string _bit;
         private string _word;
         private string _Listsp = "MYZDLFVBSW";
-        TcpClient client;// = new TcpClient();
-        NetworkStream stream;
+        //TcpClient client;// = new TcpClient();
+        //NetworkStream stream;
         
         public PLCController(string ip, int port)
         {
@@ -43,38 +44,69 @@ namespace PLCController
             this._bit = "0001";
             this._word = "0000";
         }
-        public void Open()
+        //public void Open()
+        //{
+        //    if (client == null || client.Connected == false)
+        //    {
+        //        client = new TcpClient(_ip, _port);
+        //        stream = client.GetStream();
+        //    }
+        //}
+        public bool Ping()
         {
-            if (client == null || client.Connected == false)
-            {
-                client = new TcpClient(_ip, _port);
-                stream = client.GetStream();
-            }
+            Ping pingSender = new Ping();
+            PingOptions options = new PingOptions();
+            string data = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+            byte[] buffer = Encoding.ASCII.GetBytes(data);
+            int timeout = 120;
+            PingReply reply = pingSender.Send(_ip, timeout, buffer, options);
+            if (reply.Status == IPStatus.Success)
+                return true;
+            else
+                return false;
         }
-        public void Close()
-        {
-            if (client != null)
-                if (client.Connected == true)
-                {
-                    stream.Close();
-                    client.Close();
-                }
-        }
+        //public void Close()
+        //{
+        //    if (client != null)
+        //        if (client.Connected == true)
+        //        {
+        //            stream.Close();
+        //            client.Close();
+        //        }
+        //}
         private string SendCommand(string command)
         {
-            
+            Thread.Sleep(5);
+            while (!Ping()) ;
             byte[] commandBytes = System.Text.Encoding.UTF8.GetBytes(command);
-            stream.Write(commandBytes, 0, commandBytes.Length);
             byte[] buff = new byte[1024];
+            TcpClient client = new TcpClient(_ip, _port);
+            NetworkStream stream = client.GetStream();
+            stream.Write(commandBytes, 0, commandBytes.Length);
             stream.Read(buff, 0, 1024);
+            stream.Close();
+            client.Close();
             string result = System.Text.Encoding.UTF8.GetString(buff);
-            Int16 index = 0;
-            while(result.Substring(index,1) != "\0")
+            int index = 0;
+            while (result.Substring(index, 1) != "\0")
             {
                 index++;
             }
             result = result.Substring(0, index);
             return result;
+            //byte[] commandBytes = System.Text.Encoding.UTF8.GetBytes(command);
+            //stream.Write(commandBytes, 0, commandBytes.Length);
+            //byte[] buff = new byte[1024];
+            //stream.Read(buff, 0, 1024);
+            //Thread.Sleep(1);
+            //string result = System.Text.Encoding.UTF8.GetString(buff);
+            //Int16 index = 0;
+            //while(result.Substring(index,1) != "\0")
+            //{
+            //    index++;
+            //}
+            //result = result.Substring(0, index);
+            //return result;
         }
 
 
@@ -165,7 +197,7 @@ namespace PLCController
                 }
                 catch (Exception)
                 {
-                    //Console.WriteLine(ex.ToString());
+                    
                 }
               
             }

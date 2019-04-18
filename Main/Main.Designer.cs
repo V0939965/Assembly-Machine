@@ -67,6 +67,8 @@
             this.modeCamera = new System.Windows.Forms.RadioButton();
             this.modeFolder = new System.Windows.Forms.RadioButton();
             this.panel9 = new System.Windows.Forms.Panel();
+            this.iLink = new System.Windows.Forms.RichTextBox();
+            this.iChooseLink = new System.Windows.Forms.Button();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.menuToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,6 +79,13 @@
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getCenterRotationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getOriginImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.algorithm = new System.Windows.Forms.CheckBox();
+            this.Serial_Scanner = new System.IO.Ports.SerialPort(this.components);
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.textBox3 = new System.Windows.Forms.TextBox();
             this.g_imShow.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.p_imShow)).BeginInit();
             this.G_setting.SuspendLayout();
@@ -99,7 +108,7 @@
             this.g_imShow.Controls.Add(this.p_imShow);
             this.g_imShow.Location = new System.Drawing.Point(12, 27);
             this.g_imShow.Name = "g_imShow";
-            this.g_imShow.Size = new System.Drawing.Size(558, 448);
+            this.g_imShow.Size = new System.Drawing.Size(869, 608);
             this.g_imShow.TabIndex = 0;
             this.g_imShow.TabStop = false;
             this.g_imShow.Text = "Image Capture";
@@ -109,7 +118,7 @@
             this.p_imShow.BackColor = System.Drawing.SystemColors.ControlDark;
             this.p_imShow.Location = new System.Drawing.Point(6, 19);
             this.p_imShow.Name = "p_imShow";
-            this.p_imShow.Size = new System.Drawing.Size(546, 423);
+            this.p_imShow.Size = new System.Drawing.Size(855, 583);
             this.p_imShow.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.p_imShow.TabIndex = 0;
             this.p_imShow.TabStop = false;
@@ -121,7 +130,7 @@
             this.G_setting.Controls.Add(this.panel6);
             this.G_setting.Controls.Add(this.panel2);
             this.G_setting.Controls.Add(this.panel1);
-            this.G_setting.Location = new System.Drawing.Point(576, 27);
+            this.G_setting.Location = new System.Drawing.Point(887, 27);
             this.G_setting.Name = "G_setting";
             this.G_setting.Size = new System.Drawing.Size(191, 186);
             this.G_setting.TabIndex = 1;
@@ -171,7 +180,6 @@
             this.Center_text.Size = new System.Drawing.Size(75, 20);
             this.Center_text.TabIndex = 1;
             this.Center_text.TabStop = false;
-            this.Center_text.Text = "1549,1067";
             // 
             // label7
             // 
@@ -199,7 +207,6 @@
             this.threshold_value.Size = new System.Drawing.Size(75, 20);
             this.threshold_value.TabIndex = 1;
             this.threshold_value.TabStop = false;
-            this.threshold_value.Text = "127";
             // 
             // label6
             // 
@@ -227,7 +234,6 @@
             this.roi_text.Size = new System.Drawing.Size(99, 20);
             this.roi_text.TabIndex = 1;
             this.roi_text.TabStop = false;
-            this.roi_text.Text = "670,330,1915,1457";
             // 
             // label2
             // 
@@ -255,7 +261,6 @@
             this.exposure_time.Size = new System.Drawing.Size(75, 20);
             this.exposure_time.TabIndex = 1;
             this.exposure_time.TabStop = false;
-            this.exposure_time.Text = "5000";
             // 
             // label1
             // 
@@ -268,7 +273,7 @@
             // 
             // Start
             // 
-            this.Start.Location = new System.Drawing.Point(579, 451);
+            this.Start.Location = new System.Drawing.Point(890, 610);
             this.Start.Name = "Start";
             this.Start.Size = new System.Drawing.Size(188, 40);
             this.Start.TabIndex = 2;
@@ -293,7 +298,6 @@
             this.pulse_x.Size = new System.Drawing.Size(75, 20);
             this.pulse_x.TabIndex = 1;
             this.pulse_x.TabStop = false;
-            this.pulse_x.Text = "100";
             // 
             // label3
             // 
@@ -321,7 +325,6 @@
             this.pulse_y.Size = new System.Drawing.Size(75, 20);
             this.pulse_y.TabIndex = 1;
             this.pulse_y.TabStop = false;
-            this.pulse_y.Text = "267";
             // 
             // label4
             // 
@@ -349,7 +352,6 @@
             this.pulse_z.Size = new System.Drawing.Size(75, 20);
             this.pulse_z.TabIndex = 1;
             this.pulse_z.TabStop = false;
-            this.pulse_z.Text = "45500";
             // 
             // label5
             // 
@@ -365,7 +367,7 @@
             this.G_PLC.Controls.Add(this.panel4);
             this.G_PLC.Controls.Add(this.panel5);
             this.G_PLC.Controls.Add(this.panel3);
-            this.G_PLC.Location = new System.Drawing.Point(576, 219);
+            this.G_PLC.Location = new System.Drawing.Point(887, 219);
             this.G_PLC.Name = "G_PLC";
             this.G_PLC.Size = new System.Drawing.Size(191, 119);
             this.G_PLC.TabIndex = 5;
@@ -374,21 +376,19 @@
             // 
             // log
             // 
-            this.log.Location = new System.Drawing.Point(172, 478);
+            this.log.Location = new System.Drawing.Point(15, 640);
             this.log.Name = "log";
-            this.log.Size = new System.Drawing.Size(310, 13);
+            this.log.Size = new System.Drawing.Size(546, 13);
             this.log.TabIndex = 7;
-            this.log.Text = ".";
             // 
             // trackBar1
             // 
             this.trackBar1.AutoSize = false;
-            this.trackBar1.Location = new System.Drawing.Point(621, 343);
+            this.trackBar1.Location = new System.Drawing.Point(932, 343);
             this.trackBar1.Maximum = 255;
             this.trackBar1.Name = "trackBar1";
             this.trackBar1.Size = new System.Drawing.Size(128, 24);
             this.trackBar1.TabIndex = 17;
-            this.trackBar1.Value = 70;
             this.trackBar1.Scroll += new System.EventHandler(this.trackBar1_Scroll);
             // 
             // Serial_Light
@@ -398,7 +398,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(739, 354);
+            this.label9.Location = new System.Drawing.Point(1059, 354);
             this.label9.Name = "label9";
             this.label9.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.label9.Size = new System.Drawing.Size(13, 13);
@@ -408,7 +408,7 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(582, 354);
+            this.label10.Location = new System.Drawing.Point(893, 354);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(33, 13);
             this.label10.TabIndex = 2;
@@ -425,6 +425,7 @@
             this.modeCamera.TabStop = true;
             this.modeCamera.Text = "From Camera";
             this.modeCamera.UseVisualStyleBackColor = true;
+            this.modeCamera.CheckedChanged += new System.EventHandler(this.modeCamera_CheckedChanged);
             // 
             // modeFolder
             // 
@@ -438,12 +439,33 @@
             // 
             // panel9
             // 
+            this.panel9.Controls.Add(this.iLink);
+            this.panel9.Controls.Add(this.iChooseLink);
             this.panel9.Controls.Add(this.modeFolder);
             this.panel9.Controls.Add(this.modeCamera);
-            this.panel9.Location = new System.Drawing.Point(579, 376);
+            this.panel9.Location = new System.Drawing.Point(890, 376);
             this.panel9.Name = "panel9";
-            this.panel9.Size = new System.Drawing.Size(98, 43);
+            this.panel9.Size = new System.Drawing.Size(188, 69);
             this.panel9.TabIndex = 21;
+            // 
+            // iLink
+            // 
+            this.iLink.Location = new System.Drawing.Point(6, 45);
+            this.iLink.Multiline = false;
+            this.iLink.Name = "iLink";
+            this.iLink.Size = new System.Drawing.Size(140, 19);
+            this.iLink.TabIndex = 24;
+            this.iLink.Text = "";
+            // 
+            // iChooseLink
+            // 
+            this.iChooseLink.Location = new System.Drawing.Point(152, 42);
+            this.iChooseLink.Name = "iChooseLink";
+            this.iChooseLink.Size = new System.Drawing.Size(30, 24);
+            this.iChooseLink.TabIndex = 23;
+            this.iChooseLink.Text = "...";
+            this.iChooseLink.UseVisualStyleBackColor = true;
+            this.iChooseLink.Click += new System.EventHandler(this.iChooseLink_Click);
             // 
             // menuStrip1
             // 
@@ -454,7 +476,7 @@
             this.toolsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(779, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1094, 24);
             this.menuStrip1.TabIndex = 22;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -533,13 +555,76 @@
             this.getOriginImageToolStripMenuItem.Text = "Get Origin Image";
             this.getOriginImageToolStripMenuItem.Click += new System.EventHandler(this.getOriginImageToolStripMenuItem_Click);
             // 
+            // algorithm
+            // 
+            this.algorithm.AutoSize = true;
+            this.algorithm.Location = new System.Drawing.Point(890, 451);
+            this.algorithm.Name = "algorithm";
+            this.algorithm.Size = new System.Drawing.Size(69, 17);
+            this.algorithm.TabIndex = 23;
+            this.algorithm.Text = "Algorithm";
+            this.algorithm.UseVisualStyleBackColor = true;
+            // 
+            // Serial_Scanner
+            // 
+            this.Serial_Scanner.BaudRate = 115200;
+            this.Serial_Scanner.PortName = "COM10";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(988, 451);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(94, 31);
+            this.button1.TabIndex = 24;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(944, 526);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(50, 23);
+            this.button2.TabIndex = 25;
+            this.button2.Text = "Set";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(893, 526);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(40, 20);
+            this.textBox1.TabIndex = 26;
+            this.textBox1.Text = "M0";
+            // 
+            // textBox2
+            // 
+            this.textBox2.Location = new System.Drawing.Point(890, 552);
+            this.textBox2.Name = "textBox2";
+            this.textBox2.Size = new System.Drawing.Size(49, 20);
+            this.textBox2.TabIndex = 27;
+            // 
+            // textBox3
+            // 
+            this.textBox3.Location = new System.Drawing.Point(945, 552);
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(49, 20);
+            this.textBox3.TabIndex = 28;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(779, 503);
+            this.ClientSize = new System.Drawing.Size(1094, 662);
+            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.algorithm);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.panel9);
             this.Controls.Add(this.label10);
@@ -550,9 +635,11 @@
             this.Controls.Add(this.Start);
             this.Controls.Add(this.G_setting);
             this.Controls.Add(this.g_imShow);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.MaximizeBox = false;
             this.Name = "Main";
+            this.Tag = "Connet to Camera";
             this.Text = "Locate Label For Assembly Machine";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -635,6 +722,15 @@
         private System.Windows.Forms.ToolStripMenuItem rOIToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem rotationCenterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem getOriginImageToolStripMenuItem;
+        private System.Windows.Forms.RichTextBox iLink;
+        private System.Windows.Forms.Button iChooseLink;
+        private System.Windows.Forms.CheckBox algorithm;
+        private System.IO.Ports.SerialPort Serial_Scanner;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.TextBox textBox3;
     }
 }
 
