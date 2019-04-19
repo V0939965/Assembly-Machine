@@ -4,13 +4,14 @@ using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.Util;
 using Emgu.CV.Structure;
+using System.Diagnostics;
+using System.Collections.Generic;
 using System.Threading;
-using System.Net.Sockets;
+
 namespace Main
 {
     public partial class Main : Form
     {
-        
         //------------ PARAMETER VARIABLE -----------
         Origin ORG = new Origin();
         Configuration Config = new Configuration();
@@ -25,12 +26,13 @@ namespace Main
 
         // ---------- PLC -------------
         string PLC_Flag = "M96", PLC_PulseX = "D96", PLC_PulseY = "D98", PLC_PulseZ = "D100",
-            PLC_PulseXH = "D97", PLC_PulseYH = "D99", PLC_PulseZH = "D101", Scanner = "M97";
-
-
+            PLC_PulseXH = "D97", PLC_PulseYH = "D99", PLC_PulseZH = "D101";
+        string[] Scanner = { "M76", "M166" };
+        string[] LabelResut = new string[2];
         public Main()
         {
             InitializeComponent();
+            
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -122,6 +124,11 @@ namespace Main
             modeCamera_CheckedChanged(null, null);
             ORG.SetPointO(Config.Parameter.ROTATION_CENTER);
             GetOriginImage();
+            for (int i = 0; i < LabelResut.Length; i++)
+            {
+                LabelResut[i] = string.Empty;
+            }
+
         }
         public void ShowLog(string stringstatus,Color color)
         {
@@ -212,7 +219,6 @@ namespace Main
                 while (Run)
                 {
                     int nRet_Locate=-1;
-                    int nRet_Scanner = -1;
                     {
                         while(nRet_Locate == -1)
                         {
@@ -223,19 +229,19 @@ namespace Main
                         Handling();
                     else
                     {
-                        while (nRet_Scanner == -1)
+                        int[] nRet_Scanner = { -1, -1};
+                         while (nRet_Scanner[0] == -1 && nRet_Scanner[1] == -1)
                         {
-                            nRet_Scanner = plc.GetDevice(Scanner);
+                            nRet_Scanner[0] = plc2.GetDevice(Scanner[0]);
+                            nRet_Scanner[1] = plc2.GetDevice(Scanner[1]);
                         }
-                        if (nRet_Scanner == 1)
+                        for (int i = 0;i< nRet_Scanner.Length;i++)
                         {
-                            Scan_Label();
-                        }
-                        else
-                        {
-                            SynchronizePLC();
-                        }
+                            if (nRet_Scanner[i] == 1)
+                                Scan_Label(i);
+                        }  
                     }
+                    SynchronizePLC();
                     Thread.Sleep(100);
                 }
             }
@@ -285,8 +291,8 @@ namespace Main
                 ComputerVison.RouPoint(ORG.PointO, ref p[0], result.ANGLE);
                 ComputerVison.RouPoint(ORG.PointO, ref p[1], result.ANGLE);
                 ComputerVison.Calculator(ref result, ORG.PointA, ORG.PointB, p[0], p[1], Config.Parameter.LabelSize.Width, true);
-                short y = (short)Math.Round(result.X * Config.Parameter.PULSE_Y);
-                short x = (short)Math.Round(result.Y * Config.Parameter.PULSE_X);
+                short y = (short)Math.Round(result.X * Config.Parameter.PULSE_Y + 150);
+                short x = (short)Math.Round(result.Y * Config.Parameter.PULSE_X + 20);
                 short z = (short)Math.Round(-result.ANGLE * Config.Parameter.PULSE_Z / 360);
                 if (modeCamera.Checked)
                 {
@@ -301,8 +307,11 @@ namespace Main
                 cnt = ComputerVison.FindContours(iGray, Config.Parameter.THRESHOLD_VALUE);
                 using (Image<Bgr, byte> iBgr2 = iGray.Convert<Bgr, byte>())
                 {
-                    RotatedRect r = CvInvoke.MinAreaRect(cnt);
-                    CvInvoke.Rectangle(iBgr2, r.MinAreaRect(), new MCvScalar(0, 255, 0), 3);
+                    if(cnt!= null)
+                    {
+                        RotatedRect r = CvInvoke.MinAreaRect(cnt);
+                        CvInvoke.Rectangle(iBgr2, r.MinAreaRect(), new MCvScalar(0, 255, 0), 3);
+                    }
                     if (modeCamera.Checked)
                     {
                         CvInvoke.Imwrite(@"backup\" + name + ".bmp", iBgr);
@@ -401,13 +410,55 @@ namespace Main
             Serial_Light.Write(a, 0, a.Length);
         }
 
-        private void Scan_Label()
+        private void Scan_Label(int index)
         {
             if (!Serial_Scanner.IsOpen)
                 Serial_Scanner.Open();
             byte[] a = { 0x16, 0x54, 0x0d};
             Serial_Scanner.Write(a, 0, a.Length);
-            
+            List<char> recevie = new List<char>();
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
+            while (sw.ElapsedMilliseconds < 5000)
+            {
+                int r = Serial_Scanner.ReadChar();
+                if (r == 0x0a)
+                    break;
+                else
+                    recevie.Add((char)r);
+            }
+            sw.Stop();
+            if(sw.ElapsedMilliseconds >5000)
+            {
+                MessageBox.Show("Scan Error");
+            }
+            else
+            {
+                string c = new string(recevie.ToArray());
+                c = c.TrimEnd();
+                LabelResut[index] = c;
+                lb1.Invoke(new MethodInvoker(delegate ()
+                {
+                    lb1.Text = LabelResut[0];
+                }));
+                lb2.Invoke(new MethodInvoker(delegate ()
+                {
+                    lb2.Text = LabelResut[1];
+                }));
+                if (index == Scanner.Length - 1)
+                    senIT();
+                plc2.SetDevice(Scanner[index], 0);
+
+            }
+        }
+
+        private void senIT()
+        {
+            Thread.Sleep(500);
+            for(int i = 0; i < LabelResut.Length; i++)
+            {
+                LabelResut[i] = string.Empty;
+            }
         }
         private void RecevieLabel()
         {
@@ -557,19 +608,23 @@ namespace Main
                 short nRet1 = 0;
                 for (int i = 0; i < Device1.Length / 2; i++)
                 {
+                    if (!Run)
+                        break;
                     nRet = plc.GetDevice(Device1[i, 0]);
                     if (nRet != -1)
                         nRet1 = plc2.SetDevice(Device1[i, 1], nRet);
                 }
                 for (int i = 0; i < Device2.Length / 2; i++)
                 {
+                    if (!Run)
+                        break;
                     nRet = plc2.GetDevice(Device2[i, 0]);
                     if (nRet!= -1)
                         nRet1 = plc.SetDevice(Device2[i, 1], nRet);
                 }
             }
         }
-        private void UpdateParameter(bool write=false)
+        public void UpdateParameter(bool write=false)
         {
             bool kq = !write;
             if(write == true)

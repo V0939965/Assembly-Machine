@@ -80,6 +80,8 @@
             this.getOriginImageToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Serial_Scanner = new System.IO.Ports.SerialPort(this.components);
             this.status = new System.Windows.Forms.Label();
+            this.lb1 = new System.Windows.Forms.Label();
+            this.lb2 = new System.Windows.Forms.Label();
             this.g_imShow.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.p_imShow)).BeginInit();
             this.G_setting.SuspendLayout();
@@ -555,6 +557,32 @@
             this.status.Size = new System.Drawing.Size(1073, 23);
             this.status.TabIndex = 24;
             // 
+            // lb1
+            // 
+            this.lb1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lb1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lb1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb1.Location = new System.Drawing.Point(893, 463);
+            this.lb1.Name = "lb1";
+            this.lb1.Size = new System.Drawing.Size(185, 43);
+            this.lb1.TabIndex = 25;
+            this.lb1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lb2
+            // 
+            this.lb2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lb2.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.lb2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb2.Location = new System.Drawing.Point(893, 522);
+            this.lb2.Name = "lb2";
+            this.lb2.Size = new System.Drawing.Size(185, 43);
+            this.lb2.TabIndex = 26;
+            this.lb2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -562,6 +590,8 @@
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.ClientSize = new System.Drawing.Size(1094, 662);
+            this.Controls.Add(this.lb2);
+            this.Controls.Add(this.lb1);
             this.Controls.Add(this.status);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.panel9);
@@ -663,6 +693,8 @@
         private System.IO.Ports.SerialPort Serial_Scanner;
         private System.Windows.Forms.Label log;
         private System.Windows.Forms.Label status;
+        private System.Windows.Forms.Label lb1;
+        private System.Windows.Forms.Label lb2;
     }
 }
 

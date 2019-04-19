@@ -18,6 +18,10 @@ namespace Main
     {
         Main mOriFromMain;
         Rectangle roi = new Rectangle(670, 330, 1915, 1457);
+        string LinkImg1;
+        string LinkImg2;
+        string LinkImg3;
+        Point result;
         public FindCenter(Main main)
         {
             mOriFromMain = main;
@@ -26,7 +30,7 @@ namespace Main
 
         private void FindCenter_Load(object sender, EventArgs e)
         {
-
+            Get_Center.Enabled = false;
         }
         private phuongtrinhduongthang giahephuongtrinh(Point point1, Point point2)
         {
@@ -75,7 +79,7 @@ namespace Main
             phuongtrinhvuonggoc(ref dt1, midPoint1);
             phuongtrinhvuonggoc(ref dt2, midPoint2);
             Point result =  GetCenter(dt1, dt2);
-            mOriFromMain.Center_text.Text = (result.X+roi.X).ToString() + "," + (result.Y+roi.Y).ToString();
+            
             return result;
         }
         private Point FindcRect(Image<Gray, byte> img, int thresh_value)
@@ -86,17 +90,16 @@ namespace Main
                 RotatedRect rec1 = CvInvoke.MinAreaRect(cnt);
                 PointF cRec1F = rec1.Center;
                 cRect = Point.Round(cRec1F);
-                CvInvoke.Circle(img, cRect, 3, new MCvScalar(0, 0, 0), 3);
             }
             return cRect;
         }
         private void Get_Center_Click(object sender, EventArgs e)
         {
-            using (Mat img1 = CvInvoke.Imread(@"E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\img\center\1.bmp", Emgu.CV.CvEnum.ImreadModes.Grayscale))
+            using (Mat img1 = CvInvoke.Imread(LinkImg1, Emgu.CV.CvEnum.ImreadModes.Grayscale))
             {
-                using (Mat img2 = CvInvoke.Imread(@"E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\img\center\2.bmp", Emgu.CV.CvEnum.ImreadModes.Grayscale))
+                using (Mat img2 = CvInvoke.Imread(LinkImg2, Emgu.CV.CvEnum.ImreadModes.Grayscale))
                 {
-                    using (Mat img3 = CvInvoke.Imread(@"E:\THIEU-FII\Projects\Locate_Label_Assembly_Machine\Main\bin\Debug\img\center\3.bmp", Emgu.CV.CvEnum.ImreadModes.Grayscale))
+                    using (Mat img3 = CvInvoke.Imread(LinkImg3, Emgu.CV.CvEnum.ImreadModes.Grayscale))
                     {
                         Image<Gray, byte> iGray1 = img1.ToImage<Gray, byte>();
                         Image<Gray, byte> iGray2 = img2.ToImage<Gray, byte>();
@@ -112,9 +115,10 @@ namespace Main
                         cRec3 = FindcRect(iGray3, 150);
                         Point midPoint1 = new Point((int)(cRec1.X + cRec2.X) / 2, (int)(cRec1.Y + cRec2.Y) / 2);
                         Point midPoint2 = new Point((int)(cRec3.X + cRec2.X) / 2, (int)(cRec3.Y + cRec2.Y) / 2);
-                        Point result =  CalculatorCenter(cRec1, cRec2, cRec3);
-                        CvInvoke.Circle(iGray3, result, 5 , new MCvScalar(255, 0, 255), 5);
-                        pictureBox1.Image = iGray3.ToBitmap();
+                        result =  CalculatorCenter(cRec1, cRec2, cRec3);
+                        label2.Text = "Result:\n X: " + (result.X + roi.X).ToString() + "\n Y: " + (result.Y + roi.Y).ToString();
+                        CvInvoke.Circle(iGray3, result, 10 , new MCvScalar(255, 0, 255), 5);
+                        pictureBox4.Image = iGray3.ToBitmap();
                         iGray1.Dispose();
                         iGray2.Dispose();
                         iGray3.Dispose();
@@ -124,9 +128,54 @@ namespace Main
             //this.Close();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)
         {
-            this.Close();
+            OpenFileDialog Folder = new OpenFileDialog();
+            if (Folder.ShowDialog() == DialogResult.OK)
+            {
+                LinkImg1 = textBox1.Text = Folder.FileName;
+                pictureBox1.ImageLocation = Folder.FileName;
+            }
+                
+            Folder.Dispose();
+            Get_Center.Enabled = (LinkImg1 != string.Empty && LinkImg2 != string.Empty && LinkImg3 != string.Empty);
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog Folder = new OpenFileDialog();
+            if (Folder.ShowDialog() == DialogResult.OK)
+            {
+                LinkImg2 = textBox2.Text = Folder.FileName;
+                pictureBox2.ImageLocation = Folder.FileName;
+            }
+
+            Folder.Dispose();
+            Get_Center.Enabled = (LinkImg1 != string.Empty && LinkImg2 != string.Empty && LinkImg3 != string.Empty);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog Folder = new OpenFileDialog();
+            if (Folder.ShowDialog() == DialogResult.OK)
+            {
+                LinkImg3 = textBox3.Text = Folder.FileName;
+                pictureBox3.ImageLocation = Folder.FileName;
+            }
+
+            Folder.Dispose();
+            Get_Center.Enabled = (LinkImg1 != string.Empty && LinkImg2 != string.Empty && LinkImg3 != string.Empty);
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            
+        }
+        private void update()
+        {
+            string ud = result.X.ToString() + "," + result.Y.ToString();
+            mOriFromMain.Center_text.Text = ud;
+            mOriFromMain.UpdateParameter(true);
         }
     }
     struct phuongtrinhduongthang
